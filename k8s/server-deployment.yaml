@@ -35,3 +35,15 @@ spec:
                 secretKeyRef:
                   name: pgpassword
                   key: PGPASSWORD
+      initContainers:
+        - name: postgres-check
+          image: postgres
+          command:
+            [
+              'until',
+              'pg_isready',
+              '-h',
+              'postgres-cluster-ip-service',
+              '-p',
+              '5432',
+            ]
